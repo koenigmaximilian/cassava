@@ -90,9 +90,6 @@ import qualified Data.Text as T
 import qualified Data.Text.Encoding as T
 import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.Encoding as LT
-#if MIN_VERSION_text_short(0,1,0)
-import qualified Data.Text.Short as T.S
-#endif
 import Data.Tuple.Only (Only(..))
 import Data.Vector (Vector, (!))
 import qualified Data.Vector as V
@@ -1021,21 +1018,6 @@ instance ToField SBS.ShortByteString where
     {-# INLINE toField #-}
 #endif
 
-#if MIN_VERSION_text_short(0,1,0)
--- | Assumes UTF-8 encoding. Fails on invalid byte sequences.
---
--- @since 0.5.0.0
-instance FromField T.S.ShortText where
-    parseField = maybe (fail "Invalid UTF-8 stream") pure . T.S.fromByteString
-    {-# INLINE parseField #-}
-
--- | Uses UTF-8 encoding.
---
--- @since 0.5.0.0
-instance ToField T.S.ShortText where
-    toField = T.S.toByteString
-    {-# INLINE toField #-}
-#endif
 
 -- | Assumes UTF-8 encoding. Fails on invalid byte sequences.
 instance FromField T.Text where
